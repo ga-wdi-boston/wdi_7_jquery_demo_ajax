@@ -324,13 +324,66 @@ $(document).ready(function(){
 The above code is in __js/ajax_globals_done.js__
 
 ## Demo - Create Artices using Ajax POST.
-1. Modify index.html so that it can create a new article.
 
-#### Example:
-simple_post.html will show a form where you can create individual articles.
+Modify index.html so that it can create a new article.
 
-  ``ruby -run -e httpd . -p5000``
-  Go to localhost:5000/simple_post.html
+```
+ <script src='js/post_article.js'></script> 
+```
+
+```
+  <!-- Create a new Article -->
+      <form id='new-article' action='http://localhost:3000/articles'>
+      <input type='text' name='title'placeholder="Enter new title">
+        <input type='textarea' name='body' placeholder="Enter new contents">
+        <input type='submit' value='Create Article'>
+      </form>
+```
+
+Create a js/post_article.js.
+
+```
+$(document).ready(function(){
+
+  var articleHTML = function(article){
+    var html = '<li id=article_' + article.id + '>';
+    html += article.title;
+    html += '<div>' + article.body + '</div>';
+    html += '</li>';
+    return html;
+  },
+  getArticle = function(article){
+    // Add the article to the article list
+    $('#articles').append(articleHTML(article));
+  },
+  createArticleCallbackHandler = function(event){
+    // New article form
+    var $form = $(event.target),
+    $title = $form.find("input[name='title']"),
+    $body = $form.find("input[name='body']"),
+    // Get the form action
+    action = $form.attr('action'),
+    requestObj = {article:  {title: $title.val(), body: $body.val()}};
+
+    event.preventDefault();
+      
+    // Create and send a POST request
+    $.ajax({
+      type: "POST",
+      url: 'http://localhost:3000/articles', 
+      data: requestObj,
+      dataType: 'json'
+    }).done(getArticle);
+  };
+
+  // Set up click handler for form submit
+  $('#new-article').on('submit', createArticleCallbackHandler);
+
+});
+
+```
+
+The above code is in __js/post_article_done.js__
 
 ### Lab
    * Split the class in two and draw a conceptual model of the interactions between the clien SPA and the JSON API. Whiteboard the these mental models.

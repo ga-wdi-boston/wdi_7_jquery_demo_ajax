@@ -1,0 +1,30 @@
+<html>
+  <head>
+    <link href="css/simple.css" rel="stylesheet" type="text/css" media="all">
+    <script src='js/jquery.js'></script>
+    <script src='js/ajax_globals_done.js'></script>
+    <script src='js/get_articles.js'></script> 
+    <script src='js/post_article.js'></script>     
+  </head>
+  <body>
+    <h3>Simple Ajax Get</h3>
+    <div id='container'>
+      <!-- Ajax Loading Spinner-->
+      <div id="ajaxSpinnerContainer" class='centered'>
+        <img src="images/ajax-loader.gif" id="ajaxSpinnerImage" title="working...\">
+      </div>    
+      
+      <!-- Create a new Article -->
+      <form id='new-article' action='http://localhost:3000/articles'>
+      <input type='text' name='title'placeholder="Enter new title">
+        <input type='textarea' name='body' placeholder="Enter new contents">
+        <input type='submit' value='Create Article'>
+      </form>
+
+      <button id='get-articles'>Get Articles</button>
+      <ul id='articles'>Articles
+      </ul>
+    </div>
+
+  </body>
+</html>

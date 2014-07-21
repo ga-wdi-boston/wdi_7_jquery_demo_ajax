@@ -1,0 +1,99 @@
+<html>
+  <head>
+    <!-- Spinners for Ajax loading -->
+    <link href="css/simple.css" rel="stylesheet" type="text/css" media="all">
+
+    <script src='js/jquery.js'></script>
+    <script src='js/ajax_globals.js'></script>    
+    <script>
+      $(document).ready(function(){
+
+        var articleHTML = function(article){
+          var html = '<li id=article_' + article.id + '>';
+          html += article.title;
+          html += '<div>' + article.body + '</div>';
+          html += '</li>';
+          return html;
+        };
+
+        // Callback/Handler that is invoked when the Ajax request 
+        // is done.
+        var articlesCallbackHandler = function( articles) {
+          articlesHTML = '';
+
+          // Build the HTML for each Article
+          for(var i = 0; i < articles.length; i++){
+            articlesHTML += articleHTML(articles[i]);
+          };
+
+          // Fill in the Article list
+          $('#articles').append(articlesHTML);
+
+        };
+
+        // Retrieve all the articles
+        var getArticles = function(){
+          // Retrieve all the articles
+          $.get( "http://localhost:3000",articlesCallbackHandler );
+        };
+
+        // Set Handler for get articles button
+        $('#get-articles').on('click', getArticles);
+        $('#get-articles').trigger('click')     
+
+      // set the handler for creating a new article
+      $('#new-article').submit(function(event){
+
+         // New article form
+         var $form = $(event.target),
+         $title = $form.find("input[name='title']"),
+         $body = $form.find("input[name='body']"),
+         // Get the form action
+         action = $form.attr('action');
+
+         event.preventDefault();
+      
+        // Create and send a POST request
+        $.ajax({
+            type: "POST",
+            url: 'http://localhost:3000/articles', 
+            data: {article:  {title: $title.val(), body: $body.val()}},
+            dataType: 'json',
+            success: function(article){
+              // Add the article to the article list
+              $('#articles').append(articleHTML(article));
+            } // success function
+          }); // end ajax
+        }); // end handler
+
+      }); // end ready
+    </script>
+  </head>
+  <body>
+    <!-- Ajax Loading Spinner-->
+    <div id="ajaxSpinnerContainer" class='centered'>
+      <img src="images/ajax-loader.gif" id="ajaxSpinnerImage" title="working...">
+    </div>
+
+    <h3>Simple Ajax Post</h3>
+
+    <!-- Create a new Article -->
+    <form id='new-article' action='http://localhost:3000/articles'>
+      <input type='text' name='title'placeholder="Enter new title">
+      <input type='textarea' name='body' placeholder="Enter new contents">
+      <input type='submit' value='Create Article'>
+    </form>
+
+    <div id='container'>
+      <!-- Message to user. Could be error, warning or completed
+      messaged -->
+      <div id='msg'></div>
+
+      <button id='get-articles'>Get Articles</button>
+
+      <!-- List of Articles --> 
+      <ul id='articles'>Articles
+      </ul>
+    </div>
+  </body>
+</html>
