@@ -1,0 +1,26 @@
+*.sassc
+.sass-cache
+/log
+/tmp
+**.orig
+rerun.txt
+.rvmrc
+.env
+.DS_Store
+Desktop.ini
+Thumbs.db
+.Spotlight-V100
+.Trashes
+/log/*.log
+
+# Emacs temp files
+*~
+*#*
+
+# Ctags
+TAGS
+tags
+
+# VI temp files
+*.swp
+*.swo

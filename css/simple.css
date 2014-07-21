@@ -1,0 +1,13 @@
+#ajaxSpinnerContainer {
+  height:11px;
+}
+#ajaxSpinnerImage {
+  display:none;
+}
+.centered {
+ position: fixed;
+ top: 50%;
+ left: 50%;
+ margin-top: -50px;
+ margin-left: -100px;
+}
