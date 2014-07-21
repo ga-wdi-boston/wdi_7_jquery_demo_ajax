@@ -25,12 +25,13 @@ We will be using the $.ajax function, that wraps XMLHttpRequest, provided by JQu
 
 * [XMLHttpRequest](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest)
 
-### Objectives.
-1. Show a Standalone Javascript Client implemented using Ajax.  
+## Objectives.
+1. Create a Standalone Javascript Client implemented using Ajax.  
 	This is a Single Page Application (SPA) that will use a JSON API to 	persist data.
-2. Show the JQuery Ajax methods.
-3. Learn about the JQuery Ajax global handlers.
-4. How to create resources using Ajax Post.
+2. Use the JQuery Ajax methods.
+3. Understand the asynchronous nature of Ajax.
+3. Understand how JQuery Ajax global handlers ar typically used.
+4. Understand how to create resources using Ajax Post.
 	
 ## Startup the Rails JSON Articles API/Service.
  Make sure you have the Articles API running on port 3000.
@@ -54,13 +55,13 @@ __Refer to it if your stuck__
 
 This Finished SPA will contain all the examples below.
 
-## Create a new SPA to view all the Articles
+## Demo - Create a new SPA to view all the Articles
 
 * Create a new __Directory__, named _articles_spa_ that will contain all the Client/Browser code (_javascript_, _css_ and _html_) for this SPA.  
 
 	* Change into this articles	_spa directory  
 		``cd article_spa``  
-	* Make a js and css directory.  
+	* Make a js, images and css directory.  
 	* Copy jquery.js and simple.css from the this repo into these directories.
 	
 * Create this index.html.
@@ -140,7 +141,7 @@ $(document).ready(function(){
 
 Instructor will walk through the above. 
 
-### Lab 1
+## Lab 1
 
 Go to the [JQuery Ajax](http://api.jquery.com/jquery.ajax/) page to go over the $.ajax method used in the getArticles function above.
 
@@ -156,7 +157,7 @@ Go to the [JQuery Ajax](http://api.jquery.com/jquery.ajax/) page to go over the 
 
 The above code is in __js/get_articles_lab1.js__
 
-#### Demo - Async Functions and Methods.
+## Demo - Async Functions and Methods.
 
 In the above code we are sending __Asynchronous__ requests to the server. This means that as soon as we send the request we return from the $.ajax method.
 
@@ -190,7 +191,7 @@ var getArticles = function(){
 The above code is in __js/get_articles_async_broke.js__
 
 
-#### Lab
+## Lab 2
 
 * Why doesn't this work? 
 
@@ -198,7 +199,8 @@ The above code is in __js/get_articles_async_broke.js__
 
 * Watch this. [Help, I'm stuck in an event-loop](http://vimeo.com/96425312)
 
-#### Demo - Async Functions and Methods (continued)
+
+## Demo - Async Functions and Methods (continued)
 
 To fix this we are going to use Promises, aka Deferred, objects.
 
@@ -256,38 +258,72 @@ From [Jquery.ajax](http://api.jquery.com/jquery.ajax/)
 	Incorporates the functionality of the .done() and .fail() methods, allowing (as of jQuery 1.8) the underlying Promise to be manipulated.
 
 
-#### Global Handlers
+## Demo - Global Handlers
 
-Ajax global handlers are fired during the lifecycle of an Ajax request. We are 
-going to use these handlers to show a spinner and disable controls while we 
-are sending and waiting for an Ajax request/response.
+Ajax global handlers are fired during different periods in the lifecycle of an Ajax request. We are going to use these handlers to show a spinner and disable controls while we are sending and waiting for an Ajax request/response.
 
-4. Use a global Ajax handler to indicate that the Ajax request is in progress.
-   
+* Copy the images/ajax-loader.gif to you images directory. 
+* Add this to index.html in the head section.
 
-5. Use the Chrome inspector to 
-	* Step thru the code.
-	* View the HTTP Requests and Replies.
-6. Use curl create a HTTP GET request and analyize the HTTP Request and Response.
+```
+	<script src='js/ajax_globals_done.js'></script>
+```
 
-#### Example:
+* Then add this to the index.html inside the container div.  
 
-wdi_6_rails_lab_api/simple_get.html is single page app that gets all articles from the Articles service.  
+```
+	
+	<!-- Ajax Loading Spinner-->
+	<div id="ajaxSpinnerContainer" class='centered'>
+	  <img src="images/ajax-loader.gif" id="ajaxSpinnerImage" title="working...\">
+	</div>    
+```
 
-  ``ruby -run -e httpd . -p5000``
+* Add this code to js/ajax_globals.js  
+
+```
+$(document).ready(function(){
+
+  // Fires at beginning of Ajax Request
+  $(document).ajaxStart(function(){
+
+    //Disable the get all articles button.
+    $('#get-articles').prop('disabled', true);
+
+    // Fires when Ajax Request starts
+    $("#ajaxSpinnerImage").show();
+
+  }).ajaxSend(function(event, xhr, options){
+    
+    //Clear the list of articles here?
+    if(options.type !== 'POST'){
+      $('#articles').html('');
+    }
+
+  }).ajaxComplete(function(event, xhr, options){
+
+  }).ajaxStop(function(){
+
+    // Fires when Ajax Request is done
+    $("#ajaxSpinnerImage").hide();
+
+    //Disable the get all articles button.
+    $('#get-articles').prop('disabled', false);
+
+    })
+  .ajaxError(function( event, request, settings ) {
+
+    // Fires when an Ajax Error Occurs
+    $( "#msg" ).append( "<p>Error requesting page " + settings.url + "<p>" );
+  });
   
-  Go to localhost:5000/simple_get.html
+});
 
-### Lab
-	* Break up in to teams of two.  
-	* Find the jQuery documentation for global handlers and read it.
-	* Use the Chrome inspector to validate you findings.
-	* Discuss the functionality with your partner.
-	* Enumerate typically use cases for Ajax global handlers.
-	* Present what you've found to the class.
+```
 
+The above code is in __js/ajax_globals_done.js__
 
-## Create Artices using Ajax POST.
+## Demo - Create Artices using Ajax POST.
 1. Modify index.html so that it can create a new article.
 
 #### Example:
@@ -314,17 +350,6 @@ simple_post.html will show a form where you can create individual articles.
   ``ruby -run -e httpd . -p5000``
   Go to localhost:5000/manage_articles.html
   
-# Handlebars
-We are going to use the [handlebarsjs](http://handlebarsjs.com/) library to generate html.
-### Examples:
-* handlebars.html will implement a very simple handlebar template.  
-* handlebars_ajax.html will make a Ajax request for _one_ article and render it.
-* handlebars_ajax_all.html will make a Ajax request for _all_ of the articles and generate html.
-
-
-### Lab
-Integrate handlebars into refactored javascript, manage_articles.html
-
 
   
 
