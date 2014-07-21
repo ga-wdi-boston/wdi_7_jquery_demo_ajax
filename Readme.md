@@ -36,6 +36,7 @@ We will be using the $.ajax function, that wraps XMLHttpRequest, provided by JQu
 ## Startup the Rails JSON Articles API/Service.
  Make sure you have the Articles API running on port 3000.
 
+(clone only if you don't already have it)
 1.  ``git clone git@github.com:ga-wdi-boston/wdi_6_rails_lab_api.git``
 
 2.  ``cd wdi_6_rails_lab_api``
@@ -109,9 +110,8 @@ $(document).ready(function(){
     $.ajax({
         url: "http://localhost:3000/articles",
         type: "GET",
-        dataType: 'json',
-        success(articlesCallbackHandler)
-    });
+        dataType: 'json'
+      }).success(articlesCallbackHandler);
   },
   // Callback/Handler that is invoked when the Ajax 
   // request is done.
@@ -167,6 +167,9 @@ This can cause problems if you don't keep in mind this async type of behavior.
 
 Lets see how we can in trouble. 
 
+* Create a new file, js/get_articles_async_broke.js
+
+In that file:
 * Create a global article count and set it 0. 
 * Show the number of articles on the page.
 * Calculate the number of articles returned by the server in the success callback.
@@ -188,8 +191,6 @@ var getArticles = function(){
   };
 ```
 
-The above code is in __js/get_articles_async_broke.js__
-
 
 ## Lab 2
 
@@ -206,6 +207,8 @@ To fix this we are going to use Promises, aka Deferred, objects.
 
 Without going into a lot of detail about Promises. We will use the __done__ callback handlers that are implemented using Promises.
 
+* Create a new file, js/get_articles_async_fixed.js
+
 ```
  var getArticles = function(){
     // Retrieve all the articles
@@ -221,8 +224,6 @@ Without going into a lot of detail about Promises. We will use the __done__ call
     });
   }
 ```
-
-The above code is in __js/get_articles_async_fixed.js__
 
 When defined with _done_ above:  
 * _A Promise is created that will execute the articlesCallbackHandler_.  
@@ -279,7 +280,7 @@ Ajax global handlers are fired during different periods in the lifecycle of an A
 	</div>    
 ```
 
-* Add this code to js/ajax_globals.js  
+* Create a new file js/ajax_globals.js and add this code to it:
 
 ```
 $(document).ready(function(){
@@ -320,8 +321,6 @@ $(document).ready(function(){
 });
 
 ```
-
-The above code is in __js/ajax_globals_done.js__
 
 ## Demo - Create Artices using Ajax POST.
 
