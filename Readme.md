@@ -36,16 +36,19 @@ We will be using the $.ajax function, that wraps XMLHttpRequest, provided by JQu
 ## Startup the Rails JSON Articles API/Service.
  Make sure you have the Articles API running on port 3000.
 
-(clone only if you don't already have it)
-1.  ``git clone git@github.com:ga-wdi-boston/wdi_6_rails_lab_api.git``
+* Clone
+_(clone only if you don't already have it)_
 
-2.  ``cd wdi_6_rails_lab_api``
+  ``git clone git@github.com:ga-wdi-boston/wdi_6_rails_lab_api.git``  
 
+* Change Directory  
 
-3.  This will seed your DB with Lorem Ipsum data.  
+	``cd wdi_6_rails_lab_api``
+
+* This will seed your DB with Lorem Ipsum data.  
 	``rake db:reset ``
 
-4. In Chrome go to http://localhost:3000 and make sure you
+* In Chrome go to http://localhost:3000 and make sure you
   get back a JSON representation of all the articles.
   
 
@@ -58,14 +61,14 @@ This Finished SPA will contain all the examples below.
 
 ## Demo - Create a new SPA to view all the Articles
 
-* Create a new __Directory__, named _articles_spa_ that will contain all the Client/Browser code (_javascript_, _css_ and _html_) for this SPA.  
+* __Create a new __Directory__, named _articles_spa_ that will contain all the Client/Browser code (_javascript_, _css_ and _html_) for this SPA.__    
 
 	* Change into this articles	_spa directory  
 		``cd article_spa``  
 	* Make a js, images and css directory.  
 	* Copy jquery.js and simple.css from the this repo into these directories.
 	
-* Create this index.html.
+* __Create this index.html.__
 	
 ```
 <html>
@@ -84,9 +87,11 @@ This Finished SPA will contain all the examples below.
       </ul>
     </div>
   </body>
-</html>```	
+</html>
 
-*  Run a HTTP server on port 5000.   
+```	
+
+*  __Run a HTTP server on port 5000.__     
     ``ruby -run -e httpd . -p5000``  
     
     Note: I create a bash alias for this.
@@ -98,7 +103,7 @@ This Finished SPA will contain all the examples below.
     This will run the WEBrick server on port 5000. This is used ONLY to serve up 
     the html/css and javascript for this SPA.  
   
-* Create a file js/main.js and copy this into it.
+* __Create a file js/main.js and copy this into it.__
 
 ```
 $(document).ready(function(){
@@ -106,7 +111,7 @@ $(document).ready(function(){
 })
 ```
 
-* Create a file js/article.js and this code into it.
+* __Create a file js/article.js and this code into it.__
 
 ```
 var Blog = Blog || {};
@@ -128,7 +133,7 @@ Blog.Article.prototype = {
 };
 ```
 
-* Create a file js/article_list.js and copy this into it.
+* __Create a file js/article_list.js and copy this into it.__
 	
 ```
 var Blog = Blog || {};
@@ -201,9 +206,9 @@ Lets see how we can in trouble.
 
 #### In the js/articles_list.js
 
-1. Create a global article count and set it 0.  
-2. Show the number of articles on the page.
-3. Calculate the number of articles returned by the server in the success callback.
+1. __Create a global article count and set it 0.__  
+2. __Show the number of articles on the page.__  
+3. __Calculate the number of articles returned by the server in the success callback.__  
 
 
 ```
@@ -237,7 +242,7 @@ Blog.ArticleList = {
 
 ```
 
-Don't forget to update the init method in lib/main.js 
+__Don't forget to update the init method in lib/main.js __
 
   ```
   Blog.ArticleList.init('#get-articles', '#articles', '#article-count');
@@ -260,7 +265,7 @@ To fix this we are going to use Promises, aka Deferred, objects.
 
 Without going into a lot of detail about Promises. We will use the __done__ callback handlers that are implemented using Promises.
 
-* Replace success handler with two done handlers in the js/article_list.js
+* __Replace success handler with two done handlers in the js/article_list.js__
 
 ```
  getArticles: function(){
@@ -318,14 +323,14 @@ From [Jquery.ajax](http://api.jquery.com/jquery.ajax/)
 
 Ajax global handlers are fired during different periods in the lifecycle of an Ajax request. We are going to use these handlers to show a spinner and disable controls while we are sending and waiting for an Ajax request/response.
 
-* Copy the images/ajax-loader.gif to you images directory. 
-* Add this to index.html in the head section.
+* __Copy the images/ajax-loader.gif to you images directory. __
+* __Add this to index.html in the head section.__
 
 ```
 	<script src='js/ajax_globals_done.js'></script>
 ```
 
-* Then add this to the index.html inside the container div.  
+* __Then add this to the index.html inside the container div.  __
 
 ```
 	
@@ -335,7 +340,7 @@ Ajax global handlers are fired during different periods in the lifecycle of an A
 	</div>    
 ```
 
-* Create a new file js/ajax_globals.js and add this code to it:
+* __Create a new file js/ajax_globals.js and add this code to it__
 
 ```
 $(document).ready(function(){
@@ -379,7 +384,7 @@ $(document).ready(function(){
 
 ## Demo - Create Artices using Ajax POST.
 
-Modify index.html so that it can create a new article.
+__Modify index.html so that it can create a new article.__
 
 
 ```
@@ -391,46 +396,38 @@ Modify index.html so that it can create a new article.
       </form>
 ```
 
-Create a js/post_article.js.
+__In the js/article_list.js add the methods, addArticleToList and createArticle. Also, in the init method add the form submit handler.__
 
 ```
-$(document).ready(function(){
-
-  var articleHTML = function(article){
-    var html = '<li id=article_' + article.id + '>';
-    html += article.title;
-    html += '<div>' + article.body + '</div>';
-    html += '</li>';
-    return html;
+  ...
+  
+  addArticleToList: function(article){
+    var newArticle = new Blog.Article(article.id, article.title, article.body),
+    articleHTML = newArticle.showView();
+    this.articlesListElem.append(articleHTML); 
   },
-  getArticle = function(article){
-    // Add the article to the article list
-    $('#articles').append(articleHTML(article));
-  },
-  createArticleCallbackHandler = function(event){
+  createArticle: function(){
     // New article form
     var $form = $(event.target),
     $title = $form.find("input[name='title']"),
     $body = $form.find("input[name='body']"),
-    // Get the form action
-    action = $form.attr('action'),
     requestObj = {article:  {title: $title.val(), body: $body.val()}};
 
     event.preventDefault();
-      
     // Create and send a POST request
     $.ajax({
       type: "POST",
       url: 'http://localhost:3000/articles', 
       data: requestObj,
       dataType: 'json'
-    }).done(getArticle);
-  };
+    }).done(this.addArticleToList.bind(this));
+  },
+   init: function(getArticlesID, articlesListID, articleCountID){
+    ....
 
-  // Set up click handler for form submit
-  $('#new-article').on('submit', createArticleCallbackHandler);
-
-});
+     // Set up click handler for form submit
+     $('#new-article').on('submit', this.createArticle.bind(this));
+...
 
 ```
 
@@ -450,19 +447,6 @@ I have copies the CSS, HTML and Javascript to this rails app.
 * Look at the HomeController. It only provides the HTML for the app.
 * The Javascript is in the app/assets/javascript directory. This is served up by the Rails _asset pipeline_.
    
-## Refactor
-1. Refactor the Ajax GET to use Javascript namespaces, classes, bind, etc.
-2. Refactor Ajax Post to use Javascript classes, bind, etc.
-
-#### Example (Ajax GET Refactored):
-
-  ``ruby -run -e httpd . -p5000``
-  Go to localhost:5000/adv_get.html
-
-
-#### Example (Ajax POST Refactored):
-  ``ruby -run -e httpd . -p5000``
-  Go to localhost:5000/manage_articles.html
   
 
   

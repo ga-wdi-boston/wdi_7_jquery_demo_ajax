@@ -34,11 +34,35 @@ Blog.ArticleList = {
       this.articleCountElem.html("<p> " + this.count + " Articles</p>");
     }.bind(this));
   },
+  addArticleToList: function(article){
+    var newArticle = new Blog.Article(article.id, article.title, article.body),
+    articleHTML = newArticle.showView();
+    this.articlesListElem.append(articleHTML); 
+  },
+  createArticle: function(){
+    // New article form
+    var $form = $(event.target),
+    $title = $form.find("input[name='title']"),
+    $body = $form.find("input[name='body']"),
+    requestObj = {article:  {title: $title.val(), body: $body.val()}};
+
+    event.preventDefault();
+    // Create and send a POST request
+    $.ajax({
+      type: "POST",
+      url: 'http://localhost:3000/articles', 
+      data: requestObj,
+      dataType: 'json'
+    }).done(this.addArticleToList.bind(this));
+  },
   init: function(getArticlesID, articlesListID, articleCountID){
     this.getArticlesButton = $(getArticlesID);
     this.articlesListElem = $(articlesListID);
     this.articleCountElem = $(articleCountID);
     this.count = 0; 
+
+     // Set up click handler for form submit
+     $('#new-article').on('submit', this.createArticle.bind(this));
 
     // Set the click handler
     this.getArticlesButton.on('click', this.getArticles.bind(this));
