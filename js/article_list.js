@@ -2,10 +2,13 @@ var Blog = Blog || {};
 
 Blog.ArticleList = {
   articlesCallbackHandler: function(articles){
-   var articlesHTML = '',
-   article;
+    var articlesHTML = '',
+    article;
 
-    // Build the HTML for each Article
+    // num of articles
+    this.count = articles.length;
+
+      // Build the HTML for each Article
     for(var i = 0; i < articles.length; i++){
       article = new Blog.Article(articles[i].id, articles[i].title, articles[i].body)
       articlesHTML += article.showView();
@@ -15,18 +18,25 @@ Blog.ArticleList = {
     this.articlesListElem.empty();
     // Fill in the article list
     this.articlesListElem.append(articlesHTML);
+
   },
   getArticles: function(){
+    this.count = 0;
+    
   // Retrieve all the articles
     $.ajax({
       url: "http://localhost:3000/articles",
       type: "GET",
       dataType: 'json',
     }).success(this.articlesCallbackHandler.bind(this));
+
+    this.articleCountElem.html("<p> " + this.count + " Articles</p>");
   },
-  init: function(getArticlesID, articlesListID){
+  init: function(getArticlesID, articlesListID, articleCountID){
     this.getArticlesButton = $(getArticlesID);
     this.articlesListElem = $(articlesListID);
+    this.articleCountElem = $(articleCountID);
+    this.count = 0; 
 
     // Set the click handler
     this.getArticlesButton.on('click', this.getArticles.bind(this));

@@ -168,7 +168,8 @@ Blog.ArticleList = {
     this.getArticlesButton.trigger('click');
   }
 
-};```
+};
+```
 
 Instructor will walk through the above. 
 
@@ -198,30 +199,51 @@ This can cause problems if you don't keep in mind this async type of behavior.
 
 Lets see how we can in trouble. 
 
-* Create a new file, js/get_articles_async_broke.js
+#### In the js/articles_list.js
 
-In that file:
-* Create a global article count and set it 0. 
-* Show the number of articles on the page.
-* Calculate the number of articles returned by the server in the success callback.
+1. Create a global article count and set it 0.  
+2. Show the number of articles on the page.
+3. Calculate the number of articles returned by the server in the success callback.
+
 
 ```
-// Article Count from server using Ajax
-articleCount = 0;
+var Blog = Blog || {};
 
-var getArticles = function(){
-    $.ajax( ...
-      });
-    // set the article count
-    $('#get-articles').after("<p> " + articleCount + " Articles</p>");
-    },
-  articlesCallbackHandler = function(articles) {
+Blog.ArticleList = {
+  articlesCallbackHandler: function(articles){
+	...
+    // 3. Calculate the number of articles returned by the server in the success callback.    
+    this.count = articles.length;
+	...
+  },
+  getArticles: function(){
+    this.count = 0;
+    
+    // Retrieve all the articles
+    $.ajax({... });
+
+	// 2. Show the number of articles on the page.
+    this.articleCountElem.html("<p> " + this.count + " Articles</p>");
+  },
+  init: function(getArticlesID, articlesListID, articleCountID){
     ...
-    articleCount = articles.length;
+    this.articleCountElem = $(articleCountID);
+    // 1. Create a global article and set it to 0
+    this.count = 0; 
+	... 
+  }
 
-  };
+};
+
 ```
 
+Don't forget to update the init method in lib/main.js 
+
+  ```
+  Blog.ArticleList.init('#get-articles', '#articles', '#article-count');
+
+  ```
+  
 
 ## Lab 2
 
