@@ -72,6 +72,7 @@ This Finished SPA will contain all the examples below.
   <head>
     <link href="css/simple.css" rel="stylesheet" type="text/css" media="all">
     <script src='js/jquery.js'></script>
+    <script src='js/article.js'></script>    
     <script src='js/article_list.js'></script>    
     <script src='js/main.js'></script>    
   </head>
@@ -83,8 +84,7 @@ This Finished SPA will contain all the examples below.
       </ul>
     </div>
   </body>
-</html>
-```	
+</html>```	
 
 *  Run a HTTP server on port 5000.   
     ``ruby -run -e httpd . -p5000``  
@@ -106,6 +106,28 @@ $(document).ready(function(){
 })
 ```
 
+* Create a file js/article.js and this code into it.
+
+```
+var Blog = Blog || {};
+
+Blog.Article = function(id, title, body){
+  this.id = id;
+  this.title = title;
+  this.body = body;
+};
+
+Blog.Article.prototype = {
+  showView: function(){
+    var articleHTML = '<li id=article_' + this.id + '>' + this.title;
+    articleHTML += '<div>' + this.body + '</div>';
+    articleHTML += '</li>';
+
+    return articleHTML;
+  }
+};
+```
+
 * Create a file js/article_list.js and copy this into it.
 	
 ```
@@ -113,13 +135,13 @@ var Blog = Blog || {};
 
 Blog.ArticleList = {
   articlesCallbackHandler: function(articles){
-   var articlesHTML = '';
+   var articlesHTML = '',
+   article;
 
     // Build the HTML for each Article
     for(var i = 0; i < articles.length; i++){
-      articlesHTML += '<li id=article_' + articles[i].id + '>' + articles[i].title;
-      articlesHTML += '<div>' + articles[i].body + '</div>';
-      articlesHTML += '</li>';
+      article = new Blog.Article(articles[i].id, articles[i].title, articles[i].body)
+      articlesHTML += article.showView();
     };
 
     // Clear list of articles.
@@ -146,8 +168,7 @@ Blog.ArticleList = {
     this.getArticlesButton.trigger('click');
   }
 
-};
-```
+};```
 
 Instructor will walk through the above. 
 

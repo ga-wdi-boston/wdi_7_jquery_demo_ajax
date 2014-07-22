@@ -2,13 +2,13 @@ var Blog = Blog || {};
 
 Blog.ArticleList = {
   articlesCallbackHandler: function(articles){
-   var articlesHTML = '';
+   var articlesHTML = '',
+   article;
 
     // Build the HTML for each Article
     for(var i = 0; i < articles.length; i++){
-      articlesHTML += '<li id=article_' + articles[i].id + '>' + articles[i].title;
-      articlesHTML += '<div>' + articles[i].body + '</div>';
-      articlesHTML += '</li>';
+      article = new Blog.Article(articles[i].id, articles[i].title, articles[i].body)
+      articlesHTML += article.showView();
     };
 
     // Clear list of articles.
