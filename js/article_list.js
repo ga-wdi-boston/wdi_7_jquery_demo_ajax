@@ -11,9 +11,10 @@ Blog.ArticleList = {
       articlesHTML += '</li>';
     };
 
-    $('#articles').empty();
-    // Fill in the Article list
-    $('#articles').append(articlesHTML);
+    // Clear list of articles.
+    this.articlesListElem.empty();
+    // Fill in the article list
+    this.articlesListElem.append(articlesHTML);
   },
   getArticles: function(){
   // Retrieve all the articles
@@ -21,11 +22,17 @@ Blog.ArticleList = {
       url: "http://localhost:3000/articles",
       type: "GET",
       dataType: 'json',
-    }).success(this.articlesCallbackHandler);
+    }).success(this.articlesCallbackHandler.bind(this));
   },
-  init: function(){
+  init: function(getArticlesID, articlesListID){
+    this.getArticlesButton = $(getArticlesID);
+    this.articlesListElem = $(articlesListID);
+
     // Set the click handler
-    $('#get-articles').on('click', this.getArticles.bind(this));
+    this.getArticlesButton.on('click', this.getArticles.bind(this));
+
+    // Simulate a user click event. Will get all the articles
+    this.getArticlesButton.trigger('click');
   }
 
 };

@@ -72,19 +72,18 @@ This Finished SPA will contain all the examples below.
   <head>
     <link href="css/simple.css" rel="stylesheet" type="text/css" media="all">
     <script src='js/jquery.js'></script>
-    <script src='js/get_articles.js'></script>    
+    <script src='js/article_list.js'></script>    
+    <script src='js/main.js'></script>    
   </head>
   <body>
-    <h3>Simple Ajax Get</h3>
+    <h3>Article Blog Ajax Get</h3>
     <div id='container'>
       <button id='get-articles'>Get Articles</button>
       <ul id='articles'>Articles
       </ul>
     </div>
-
   </body>
 </html>
-
 ```	
 
 *  Run a HTTP server on port 5000.   
@@ -99,24 +98,22 @@ This Finished SPA will contain all the examples below.
     This will run the WEBrick server on port 5000. This is used ONLY to serve up 
     the html/css and javascript for this SPA.  
   
-3. Create a file js/get_articles.js and copy this into it.
-	
+* Create a file js/main.js and copy this into it.
+
 ```
 $(document).ready(function(){
+  Blog.ArticleList.init('#get-articles', '#articles');
+})
+```
 
-  // Get Articles from server using Ajax
-  var getArticles = function(){
-    // Retrieve all the articles
-    $.ajax({
-        url: "http://localhost:3000/articles",
-        type: "GET",
-        dataType: 'json'
-      }).success(articlesCallbackHandler);
-  },
-  // Callback/Handler that is invoked when the Ajax 
-  // request is done.
-  articlesCallbackHandler = function(articles) {
-    var articlesHTML = '';
+* Create a file js/article_list.js and copy this into it.
+	
+```
+var Blog = Blog || {};
+
+Blog.ArticleList = {
+  articlesCallbackHandler: function(articles){
+   var articlesHTML = '';
 
     // Build the HTML for each Article
     for(var i = 0; i < articles.length; i++){
@@ -125,18 +122,31 @@ $(document).ready(function(){
       articlesHTML += '</li>';
     };
 
-    // Fill in the Article list
-    $('#articles').append(articlesHTML);
-  };
+    // Clear list of articles.
+    this.articlesListElem.empty();
+    // Fill in the article list
+    this.articlesListElem.append(articlesHTML);
+  },
+  getArticles: function(){
+  // Retrieve all the articles
+    $.ajax({
+      url: "http://localhost:3000/articles",
+      type: "GET",
+      dataType: 'json',
+    }).success(this.articlesCallbackHandler.bind(this));
+  },
+  init: function(getArticlesID, articlesListID){
+    this.getArticlesButton = $(getArticlesID);
+    this.articlesListElem = $(articlesListID);
 
-  // Set up click handler for getting articles.
-  $('#get-articles').on('click', getArticles);
+    // Set the click handler
+    this.getArticlesButton.on('click', this.getArticles.bind(this));
 
-  // Simulate a user click event.
-  $('#get-articles').trigger('click');
+    // Simulate a user click event. Will get all the articles
+    this.getArticlesButton.trigger('click');
+  }
 
-}); // end ready
-
+};
 ```
 
 Instructor will walk through the above. 
