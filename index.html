@@ -2,6 +2,7 @@
   <head>
     <link href="css/simple.css" rel="stylesheet" type="text/css" media="all">
     <script src='js/jquery.js'></script>
+    <script src='js/ajax_globals_done.js'></script>
     <script src='js/article.js'></script>    
     <script src='js/article_list.js'></script>    
     <script src='js/main.js'></script>    
@@ -9,6 +10,12 @@
   <body>
     <h3>Article Blog Ajax Get</h3>
     <div id='container'>
+
+      <!-- Ajax Loading Spinner-->
+      <div id="ajaxSpinnerContainer" class='centered'>
+        <img src="images/ajax-loader.gif" id="ajaxSpinnerImage" title="working...\">
+      </div>   
+      
       <button id='get-articles'>Get Articles</button>
       <div id='article-count'>
       </div>

@@ -381,9 +381,6 @@ $(document).ready(function(){
 
 Modify index.html so that it can create a new article.
 
-```
- <script src='js/post_article.js'></script> 
-```
 
 ```
   <!-- Create a new Article -->
