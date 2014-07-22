@@ -384,9 +384,19 @@ $(document).ready(function(){
 
 The above code is in __js/post_article_done.js__
 
-### Lab
-   * Split the class in two and draw a conceptual model of the interactions between the clien SPA and the JSON API. Whiteboard the these mental models.
-   * Present this model.
+## Demo - Same app but
+we'll use Rails to provide all of the javascript.
+
+This Rails app is __both__ the JSON API and will provide the HTML, CSS and Javasrcipt.
+
+I have copies the CSS, HTML and Javascript to this rails app.
+
+[Same App using Rails](https://github.com/ga-wdi-boston/wdi_7_rails_demo_ajax)
+
+* fork and clone https://github.com/ga-wdi-boston/wdi_7_rails_demo_ajax
+* Look at the schema, same as the rails api schema.
+* Look at the HomeController. It only provides the HTML for the app.
+* The Javascript is in the app/assets/javascript directory. This is served up by the Rails _asset pipeline_.
    
 ## Refactor
 1. Refactor the Ajax GET to use Javascript namespaces, classes, bind, etc.
