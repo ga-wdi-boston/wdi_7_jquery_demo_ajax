@@ -22,15 +22,17 @@ Blog.ArticleList = {
   },
   getArticles: function(){
     this.count = 0;
-    
+
   // Retrieve all the articles
     $.ajax({
       url: "http://localhost:3000/articles",
       type: "GET",
       dataType: 'json',
-    }).success(this.articlesCallbackHandler.bind(this));
-
-    this.articleCountElem.html("<p> " + this.count + " Articles</p>");
+    })
+    .done(this.articlesCallbackHandler.bind(this))
+    .done(function(){
+      this.articleCountElem.html("<p> " + this.count + " Articles</p>");
+    }.bind(this));
   },
   init: function(getArticlesID, articlesListID, articleCountID){
     this.getArticlesButton = $(getArticlesID);

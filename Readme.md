@@ -260,22 +260,24 @@ To fix this we are going to use Promises, aka Deferred, objects.
 
 Without going into a lot of detail about Promises. We will use the __done__ callback handlers that are implemented using Promises.
 
-* Create a new file, js/get_articles_async_fixed.js
+* Replace success handler with two done handlers in the js/article_list.js
 
 ```
- var getArticles = function(){
-    // Retrieve all the articles
+ getArticles: function(){
+    this.count = 0;
+
+  // Retrieve all the articles
     $.ajax({
-        url: "http://localhost:3000/articles",
-        type: "GET",
-        dataType: 'json'
-      })
-    .done(articlesCallbackHandler)
+      url: "http://localhost:3000/articles",
+      type: "GET",
+      dataType: 'json',
+    })
+    .done(this.articlesCallbackHandler.bind(this))
     .done(function(){
-      // set the article count
-      $('#get-articles').after("<p> " + articleCount + " Articles</p>");
-    });
-  }
+      this.articleCountElem.html("<p> " + this.count + " Articles</p>");
+    }.bind(this));
+  },
+
 ```
 
 When defined with _done_ above:  
