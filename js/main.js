@@ -20,9 +20,9 @@ var Blog = (function(){
   var _output = function(dataJSON){
     for (var i = 0; i < dataJSON.length; i++){
       _addToList('li', dataJSON[i].title);
-      _addToList('p', dataJSON[i].body);
-      _addToList('ul id=comments' + i);
-      _populateComments.call($('#comments' + i), dataJSON[i]);
+      _addToList('div id=article-' + i, dataJSON[i].body);
+      _addToList('ul id=comments-' + i);
+      _populateComments.call($('#comments-' + i), dataJSON[i]);
     }
   };
 
