@@ -17,10 +17,10 @@ var ArticleApp = ArticleApp || {};
   ArticleApp.showArticles = function(data){
   data.forEach(function(article){
     $('#articles').append('<div id="article-' + article.id + '"></div>');
-    $('#article-'+ article.id).append('<h1>' + article.title + '</h1>');
+    $('#article-'+ article.id).append('<h1> Title:' + article.title + '</h1>');
     $('#article-'+ article.id).append('<p>' + article.body + '</p>');
     article.comments.forEach(function(comment){
-      $('#article-'+ article.id).append('<h4>' + comment.creator + '</h4>');
+      $('#article-'+ article.id).append('<h4> Written By:' + comment.creator + '</h4>');
       $('#article-'+ article.id).append('<p style ="font-size: 6px">' + comment.body + '</p>');
     });
   });
