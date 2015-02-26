@@ -15,7 +15,7 @@ ArticleApp.getAritcles = function(data) {
   var parsed = JSON.parse(str);
 
   parsed.forEach(function(article) {
-    $('#article-id').append('<p>' + article.id + ' ' + article.body);
+    $('#article-id').append('<p>' + 'Article ' + article.id + ': ' + article.body);
   });
 };
 
