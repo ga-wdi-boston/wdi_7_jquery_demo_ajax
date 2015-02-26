@@ -1,9 +1,9 @@
 $(document).ready(function(){
-  ArticleApp.ArticleList.get();
-  // $.ajax({
-  //   url: 'http://localhost:3000/articles',
-  //   type: 'GET'
-  // }).done(ArticleApp.getArticles);
+
+  $.ajax({
+    url: 'http://localhost:3000/articles',
+    type: 'GET'
+  }).done(ArticleApp.getArticles);
 });
 
 // Create a namespace for my app
