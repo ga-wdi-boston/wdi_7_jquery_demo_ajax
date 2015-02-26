@@ -1,4 +1,3 @@
-var $list;
 $(document).ready(function(){
   Blog.init();
 });
@@ -6,35 +5,33 @@ $(document).ready(function(){
 var Blog = (function(){
 
   var init = function(){
-    $list = $('#articles');
+    var $list = $('#articles');
     $.ajax({
       url: 'http://localhost:3000/articles',
       type: 'GET',
     }).done(function(data, textStatus, jqXHR){
-      _output(data);
-    }).fail(function(jqXHR, textStatus, errorThrown){
-      console.log(jqXHR, textStatus, errorThrown);
+      _output.call($list, data);
     })
   };
 
-  var _output = function(dataJSON){
-    for (var i = 0; i < dataJSON.length; i++){
-      _populateArticle(dataJSON[i], i);
-      _populateComments(dataJSON[i], i);
+  var _output = function(articles){
+    for (var i = 0; i < articles.length; i++){
+      _populateArticle.call(this, articles[i], i);
+      _populateComments.call(this, articles[i], i);
     }
   };
 
-  var _addToList = function(target, selector, text){
+  var _addTo = function(target, selector, text){
     target.append($('<' + selector + '>').text(text));
   };
 
   var _populateArticle = function(article, id){
-    _addToList($list, 'li', article.title);
-    _addToList($list, 'div id=article-' + id, article.body);
+    _addTo(this, 'li', article.title);
+    _addTo(this, 'div id=article-' + id, article.body);
   };
 
   var _populateComments = function(article, id){
-    _addToList($list, 'ul id=comments-' + id);
+    _addTo(this, 'ul id=comments-' + id);
     var $com = $('#comments-' + id);
     for (var i = 0; i < article.comments.length; i++){
       $com.append($('<li>').text(article.comments[i].body + " --" + article.comments[i].creator));
