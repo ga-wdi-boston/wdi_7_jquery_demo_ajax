@@ -5,6 +5,11 @@ $(document).ready(function(){
 var Blog = (function(){
 
   var init = function(){
+    _requestArticles();
+    $('#get-articles').click(_requestArticles);
+  };
+
+  var _requestArticles = function(){
     var $list = $('#articles');
     $.ajax({
       url: 'http://localhost:3000/articles',
