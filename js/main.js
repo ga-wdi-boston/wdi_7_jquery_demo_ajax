@@ -1,6 +1,15 @@
+//working code
+// $(document).ready(function(){
+//   Blog.ArticleList.init('#get-articles', '#articles');
+// })
+
+// inclass demo
 $(document).ready(function(){
-  Blog.ArticleList.init('#get-articles', '#articles');
+ ArticleApp.ArticleList.get();
 })
+
+var ArticleApp = ArticleApp || {};
+
 
 
 
