@@ -2,23 +2,20 @@ $(document).ready(function(){
   $.ajax({
    url: 'http://localhost:3000/articles',
    type: 'get'
-  }).done(ArticleApp.getArticles);
+  }).done(getArticles);
 });
 
-var ArticleApp = ArticleApp || {};
 
-ArticleApp.getArticles = function(data){
- console.log(data);
+var getArticles = function(articleData){
+  var stringifiedArticles = JSON.stringify(articleData);
+  var parsedArticles = JSON.parse(stringifiedArticles);
 
- // Iterate over all the articles returned from the
- // server.
-
- // And create html for each article
-
- // The HTML for each article should be wrapped in a div
- // that has and id "article-<id>"
- // <div id="article-17"> .... </div>
+  parsedArticles.forEach(function(article) {
+    $('#articles').append("<li class = 'article-" + article.id + "'>" + '<h2>' + article.title + '</h2> <br> <p>' + article.body + '</p> </li>');
+  });
 };
+
+
 
 //Iterate over all the articles returned from the server and create html for each article.
 // The HTML for each article should be wrapped in a div that has an id of "article-<id>" (for article 17, <div id="article-17">)
