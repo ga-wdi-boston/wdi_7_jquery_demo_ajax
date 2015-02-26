@@ -14,10 +14,12 @@ $(document).ready(function() {
     var ArticleApp = ArticleApp || {};
 
     ArticleApp.getArticles = function(data) {
+      var articles = data;
+      console.log(articles);
       var $list = $('#articles');
-      for (var i = 0; i < data.length; i++) {
-        var $newArticle = $('<li id="article-' + data[i].id + '">');
-        $newArticle.html('<h3>' + data[i].title + '</h3>' + ' <p>' + data[i].body + '</p>');
+      for(var i = 0; i < articles.length; i++) {
+        var $newArticle = $('<li id="article-' + articles[i].id + '">');
+        $newArticle.html('<h3>' + articles[i].title + '</h3>' + ' <p>' + articles[i].body + '</p>' + '<p><small>' + articles[i].comments[i].body + '</small></p>');
         $list.append($newArticle);
       };
 };
