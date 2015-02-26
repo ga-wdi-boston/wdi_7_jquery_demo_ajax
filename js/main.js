@@ -12,7 +12,7 @@ var ArticleApp = ArticleApp || {};
 
  ArticleApp.getArticles = function(data){
     // debugger;
-    console.log(data);
+
     // Iterate over all articles returned from the server
 
     // for(var i = 0; i < articles.length; i++){
@@ -20,10 +20,11 @@ var ArticleApp = ArticleApp || {};
     //   $('ul').append('<li id=article' + articles[i].id + '>' + articles[i].title);
     // }
     // $('#container').append('<ul>');
-    var articlesHTML = "<div id='" + articles.id + "'><dt>Article</dt><dd>";
-    articlesHTML += articles.title + "</dd>";
-    articlesHTML +=  articles.body;
+    var articlesHTML = "<div id='" + data.id + "'><dt>Article title</dt><dd>";
+    articlesHTML += data.title + "</dd>";
+    articlesHTML +=  data.body;
     $('#container').append(articlesHTML);
+    console.log(data);
   };
 
 
