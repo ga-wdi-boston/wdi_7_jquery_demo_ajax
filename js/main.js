@@ -23,7 +23,8 @@ $(document).ready(function() {
         $newArticle.html('<h3>' + articles[i].title + '</h3>' + ' <p>' + articles[i].body + '</p>');
         $list.append($newArticle);
       } else {
-        $newArticle.html('<h3>' + articles[i].title + '</h3>' + ' <p>' + articles[i].body + '</p>' + '<p><small>' + articles[i].comments[i].body + '</small></p>' + '<p><small>' + articles[i].comments[i].creator + '</small></p>');
+        $newArticle.html('<h3>' + articles[i].title + '</h3>' + ' <p>' + articles[i].body + '</p>');
+          // '<p><small>' + articles[i].comments[i].body + '</small></p>' + '<p><small>' + articles[i].comments[i].creator + '</small></p>');
         $list.append($newArticle);
       };
     };
