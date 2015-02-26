@@ -1,21 +1,13 @@
 $(document).ready(function(){
-<<<<<<< HEAD
-  ArticleApp.ArticleList.get();
-  // $.ajax({
-  //   url: 'http://localhost:3000/articles',
-  //   type: 'GET'
-  // }).done(ArticleApp.getArticles);
-=======
+
   $.ajax({
     url: 'http://localhost:3000/articles',
-    type: 'get'
+    type: 'GET'
   }).done(ArticleApp.getArticles);
->>>>>>> c34d45dd3a37e896e924b3047a2bb4305bfd141b
 });
 
 // Create a namespace for my app
 var ArticleApp = ArticleApp || {};
-<<<<<<< HEAD
 //callback handler for all articles from server
 
  ArticleApp.getArticles = function(remoteArticles){
@@ -56,20 +48,3 @@ var ArticleApp = ArticleApp || {};
 
 
 // The HTML for each article should we wrapped in a div that has an id "article-id" <div id="article-n">
-=======
-
-// callback handler for all articles from server
-ArticleApp.getArticles = function(data){
-  debugger;
-  console.log(data);
-
-  // Iterate over all the articles returned from the
-  // server.
-
-  // And create html for each article
-
-  // The HTML for each article should be wrapped in a div
-  // that has and id "article-<id>"
-  // <div id="article-17"> .... </div>
-};
->>>>>>> c34d45dd3a37e896e924b3047a2bb4305bfd141b
