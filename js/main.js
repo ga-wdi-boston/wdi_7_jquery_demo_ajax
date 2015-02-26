@@ -2,7 +2,7 @@ $(document).ready(function(){
 
 $('#get-articles').click(ArticleApp.getArticles);
 $('#hide-articles').click(ArticleApp.hideArticles);
-$('#get-articles').click(ArticleApp.getArticles);
+$('#show-articles').click(ArticleApp.showArticles);
 
 });
 
@@ -22,6 +22,10 @@ ArticleApp.getArticles = function(data){
    });
 };
 
-ArticleApp.hideArticles = function(data){
+ArticleApp.hideArticles = function(){
   $('#articles').hide("slow");
-}
+};
+
+ArticleApp.showArticles = function(){
+  $('#articles').show("slow");
+};
