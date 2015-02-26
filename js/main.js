@@ -19,7 +19,5 @@ $(document).ready(function() {
         var $newArticle = $('<li id="article-' + data[i].id + '">');
         $newArticle.html('<h3>' + data[i].title + '</h3>' + ' <p>' + data[i].body + '</p>');
         $list.append($newArticle);
-      }
-    });
-  };
-});
+      };
+};
