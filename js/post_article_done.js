@@ -21,11 +21,11 @@ $(document).ready(function(){
     requestObj = {article:  {title: $title.val(), body: $body.val()}};
 
     event.preventDefault();
-      
+
     // Create and send a POST request
     $.ajax({
       type: "POST",
-      url: 'http://localhost:3000/articles', 
+      url: 'http://localhost:3000/articles',
       data: requestObj,
       dataType: 'json'
     }).done(getArticle);
