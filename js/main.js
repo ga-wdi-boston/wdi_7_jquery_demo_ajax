@@ -37,6 +37,8 @@ ArticlesApp.showArticles = function(articles) {
         $('#articles').append(articleHTML);
     };
 
+    $('#article-count').text('There are ' + articles.length + ' articles:');
+
     articles.forEach(createHTML);
 
 };
