@@ -13,7 +13,7 @@ var Blog = (function(){
     var $list = $('#articles');
     $.ajax({
       url: 'http://localhost:3000/articles',
-      type: 'GET',
+      type: 'GET'
     }).done(function(data, textStatus, jqXHR){
       _output.call($list, data);
     })
