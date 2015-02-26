@@ -1,17 +1,15 @@
 $(document).ready(function(){
   $.ajax({
    url: 'http://localhost:3000/articles',
-   type: 'get'
+   type: 'get',
+   dataType: 'json'
   }).done(getArticles);
 });
 
 
 var getArticles = function(articleData){
-  var stringifiedArticles = JSON.stringify(articleData);
-  var parsedArticles = JSON.parse(stringifiedArticles);
-
-  parsedArticles.forEach(function(article) {
-    $('#articles').append("<li class = 'article-" + article.id + "'>" + '<h2>' + article.title + '</h2> <br> <p>' + article.body + '</p> </li>');
+  articleData.forEach(function(article) {
+    $('#articles').append("<li class = 'article-" + article.id + "'>" + '<h4>' + article.title + '</h4> <br> <p>' + article.body + '</p> </li>');
   });
 };
 
