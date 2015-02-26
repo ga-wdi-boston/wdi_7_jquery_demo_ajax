@@ -19,20 +19,25 @@ var Blog = (function(){
 
   var _output = function(dataJSON){
     for (var i = 0; i < dataJSON.length; i++){
-      _addToList('li', dataJSON[i].title);
-      _addToList('div id=article-' + i, dataJSON[i].body);
-      _addToList('ul id=comments-' + i);
-      _populateComments.call($('#comments-' + i), dataJSON[i]);
+      _populateArticle(dataJSON[i], i);
+      _populateComments(dataJSON[i], i);
     }
   };
 
-  var _addToList = function(selector, text){
-    $list.append($('<' + selector + '>').text(text));
+  var _addToList = function(target, selector, text){
+    target.append($('<' + selector + '>').text(text));
   };
 
-  var _populateComments = function(article){
+  var _populateArticle = function(article, id){
+    _addToList($list, 'li', article.title);
+    _addToList($list, 'div id=article-' + id, article.body);
+  };
+
+  var _populateComments = function(article, id){
+    _addToList($list, 'ul id=comments-' + id);
+    var $com = $('#comments-' + id);
     for (var i = 0; i < article.comments.length; i++){
-      this.append($('<li>').text(article.comments[i].body));
+      $com.append($('<li>').text(article.comments[i].body + " --" + article.comments[i].creator));
     }
   };
 
