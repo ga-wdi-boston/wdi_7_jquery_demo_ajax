@@ -10,11 +10,11 @@ $(document).ready(function(){
         dataType: 'json',
         success: articlesCallbackHandler
       });
-   
+
     // set the article count
     $('#get-articles').after("<p> " + articleCount + " Articles</p>");
     },
-  // Callback/Handler that is invoked when the Ajax 
+  // Callback/Handler that is invoked when the Ajax
   // request is done.
   articlesCallbackHandler = function(articles) {
     var articlesHTML = '';
