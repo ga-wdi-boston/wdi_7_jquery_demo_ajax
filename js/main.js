@@ -18,8 +18,13 @@ $(document).ready(function() {
       console.log(articles);
       var $list = $('#articles');
       for(var i = 0; i < articles.length; i++) {
-        var $newArticle = $('<li id="article-' + articles[i].id + '">');
-        $newArticle.html('<h3>' + articles[i].title + '</h3>' + ' <p>' + articles[i].body + '</p>' + '<p><small>' + articles[i].comments[i].body + '</small></p>');
+       var $newArticle = $('<li id="article-' + articles[i].id + '">');
+      if(articles[i].comments.length === 0){
+        $newArticle.html('<h3>' + articles[i].title + '</h3>' + ' <p>' + articles[i].body + '</p>');
+        $list.append($newArticle);
+      } else {
+        $newArticle.html('<h3>' + articles[i].title + '</h3>' + ' <p>' + articles[i].body + '</p>' + '<p><small>' + articles[i].comments[i].body + '</small></p>' + '<p><small>' + articles[i].comments[i].creator + '</small></p>');
         $list.append($newArticle);
       };
+    };
 };
