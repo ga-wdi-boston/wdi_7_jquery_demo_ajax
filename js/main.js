@@ -1,8 +1,9 @@
 $(document).ready(function(){
 
-$('#get-articles').click(ArticleApp.getArticles);
-$('#hide-articles').click(ArticleApp.hideArticles);
-$('#show-articles').click(ArticleApp.showArticles);
+  $('#get-articles').click(ArticleApp.getArticles);
+  $('#show-hide-articles').click(function(){
+    $('#articles').toggle();
+  });
 
 });
 
