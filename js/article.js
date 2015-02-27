@@ -8,7 +8,7 @@ ArticleApp.Article = function(remoteArticle){
 
   // Create copy of remote Comments
   this.comments = [];
-  
+
   remoteArticle.comments.forEach(function(comment){
     var newComment = {};
     newComment.creator = comment.creator;
@@ -19,7 +19,7 @@ ArticleApp.Article = function(remoteArticle){
 
 ArticleApp.Article.prototype.render = function(){
   // spit out html for one article
-  var html = "<div id='article-" + this.id + "'>";
+  var html = "<li id='article-" + this.id + "'>";
   html += "<h3>" + this.title + "</h3>";
   html += "<article>" + this.body + "</article>";
 
@@ -28,6 +28,6 @@ ArticleApp.Article.prototype.render = function(){
     html += "<i>" + comment.creator + "</i>";
     html += "<p>" + comment.body + "</p>";
   });
-  html += "</div>";
+  html += "</li>";
   return html;
 };

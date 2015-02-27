@@ -9,7 +9,7 @@ ArticleApp.ArticleList = {
     }).done(ArticleApp.ArticleList.articlesHandler);
   },
   articlesHandler: function(remoteArticles){
-    var html = "<ul>", article;
+    var html = "", article;
 
     remoteArticles.forEach(function(remoteArticle){
     // Create a new article from a remoteArticle
@@ -18,10 +18,6 @@ ArticleApp.ArticleList = {
     html += article.render();
   });
   html += "<ul>";
-  $('#container').append(html);
+  $('#articles').append(html);
   }
 };
-
-
-
-
