@@ -1,5 +1,6 @@
 $(document).ready(function(){
-  ArticleApp.ArticleList.get();
+  ArticleApp.ArticleList.init($('#get-articles'), $('#articles') );
+
 });
 
 // Create a namespace for my app
