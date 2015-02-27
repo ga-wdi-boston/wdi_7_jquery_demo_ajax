@@ -1,5 +1,5 @@
 $(document).ready(function(){
-  ArticleApp.ArticleList.init($('#get-articles'), $('#articles') );
+  ArticleApp.ArticleList.init($('#get-articles'), $('#articles'), $('#new-article') );
 
 });
 
